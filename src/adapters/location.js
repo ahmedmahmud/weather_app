@@ -1,14 +1,23 @@
 import * as Location from 'expo-location';
 
 const getCurrentCoords = async () => {
-  let { status } = await Location.requestForegroundPermissionsAsync();
+  try {
+    let { status } = await Location.requestForegroundPermissionsAsync();
 
-  if (status !== 'granted') {
-    return { error: 'Permission to access location was denied' }
+    if (status !== 'granted') {
+      return { error: 'Permission to access location was denied' }
+    }
+  } catch {
+    return { error: 'Failed to request for location permissions' }
   }
 
-  let { coords } = await Location.getCurrentPositionAsync();
-  return coords;
+  try {
+    let { coords } = await Location.getCurrentPositionAsync();
+    return coords;
+  } catch {
+    return { error: 'Failed to get current position' }
+  }
+  
 }
 
 export { getCurrentCoords };

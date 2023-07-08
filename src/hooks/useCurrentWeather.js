@@ -8,19 +8,31 @@ const useCurrentWeather = () => {
 
   useEffect(() => {
     (async () => {
-      const coords = getCurrentCoords();
-
-      if (error in coords) {
+      const coords = await getCurrentCoords();
+      console.log("coords", coords);
+        
+      if ('error' in coords) {
         setError(coords.error);
       } else {
-        const response = await fetch(
-          `https://api.open-meteo.com/v1/forecast?latitude=${coords.latitude}&longitude=${coords.longitude}&current_weather=true`
-        );
-  
-        const data = await response.json();
-        setData(data);
-        console.log(data);
+        try {
+          const response = await fetch(
+            `https://api.open-meteo.com/v1/forecast?latitude=${coords.latitude}&longitude=${coords.longitude}&current_weather=true`
+          );
+
+          if (!response.ok) {
+            throw new Error;
+          }
+
+          const data = await response.json();
+          console.log("fetched", data);
+          
+          setError(null);
+          setData(data);
+        } catch {
+          setError("Failed to fetch weather");
+        }
       }
+
       setLoading(false);
     })();
   }, []);
