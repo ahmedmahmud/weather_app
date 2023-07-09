@@ -15,7 +15,9 @@ function Home({ navigation }) {
       ) : (
         <View>
           <Text>Today: {data.current_weather.temperature} °C</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Forecast')}>
+          <TouchableOpacity onPress={() => navigation.navigate('Forecast', {
+            daily: data.daily
+          })}>
             <Text>View forecast</Text>
           </TouchableOpacity>
         </View>
