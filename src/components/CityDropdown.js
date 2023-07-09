@@ -15,7 +15,6 @@ import { AutocompleteDropdown } from "react-native-autocomplete-dropdown";
 const CityDropdown = memo(({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const [suggestionsList, setSuggestionsList] = useState(null);
-  const [selectedItem, setSelectedItem] = useState(null);
   const dropdownController = useRef(null);
 
   const searchRef = useRef(null);
@@ -37,9 +36,12 @@ const CityDropdown = memo(({ navigation }) => {
   }, []);
 
   const onSelectItem = ((item) => {
-    item && navigation.navigate("Result", {
-      place: item
-    })
+    if (item) {
+      navigation.navigate("Result", {
+        place: item,
+      });
+      setSuggestionsList(null);
+    }
   })
 
   const onClearPress = useCallback(() => {

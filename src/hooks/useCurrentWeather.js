@@ -8,7 +8,6 @@ const useCurrentWeather = () => {
 
   useEffect(() => {
     (async () => {
-      console.log("here");
       const coords = await getCurrentCoords();
       console.log("coords", coords);
         
