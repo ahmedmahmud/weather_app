@@ -4,16 +4,18 @@ import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import useCurrentWeather from "../hooks/useCurrentWeather";
 import CityDropdown from "../components/CityDropdown";
 import { usePlaces, usePlacesDispatch } from "../contexts/PlacesContext";
+import useWeather from "../hooks/useWeather";
 
 function Home({ navigation }) {
   const [data, loading, error] = useCurrentWeather();
 
   const places = usePlaces();
-  const dispatch = usePlacesDispatch();
+  const [savedData, refresh] = useWeather(places);
 
+  const dispatch = usePlacesDispatch();
   const removePlace = (id) => {
     dispatch({
-      type: 'remove',
+      type: "remove",
       id,
     });
   };
@@ -24,7 +26,6 @@ function Home({ navigation }) {
       keyboardDismissMode="on-drag"
       keyboardShouldPersistTaps="handled"
       contentInsetAdjustmentBehavior="automatic"
-      // contentContainerStyle={{ paddingBottom: 200 }}
       style={{ flex: 1 }}
     >
       <View className="justify-center items-center flex-1 bg-white">
@@ -45,16 +46,23 @@ function Home({ navigation }) {
               <Text>View forecast</Text>
             </TouchableOpacity>
             <CityDropdown navigation={navigation} />
-            {
-              places.map((place) => (
-                <View>
-                  <Text>{place.name}</Text>
-                  <TouchableOpacity onPress={() => removePlace(place.id)}>
-                    <Text>Remove</Text>
-                  </TouchableOpacity>
-                </View>
-              ))
-            }
+            {places.map(({ name, id }) => (
+              <View>
+                <Text>{name}</Text>
+                <TouchableOpacity onPress={() => removePlace(id)}>
+                  <Text>Remove</Text>
+                </TouchableOpacity>
+                {savedData[id] ? (
+                  savedData[id].error ? (
+                    <Text>Error</Text>
+                  ) : (
+                    <Text>{savedData[id].current_weather.temperature}</Text>
+                  )
+                ) : (
+                  <Text>Loading...</Text>
+                )}
+              </View>
+            ))}
           </View>
         )}
       </View>
