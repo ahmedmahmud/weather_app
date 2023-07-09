@@ -8,6 +8,7 @@ const useCurrentWeather = () => {
 
   useEffect(() => {
     (async () => {
+      console.log("here");
       const coords = await getCurrentCoords();
       console.log("coords", coords);
         
@@ -15,10 +16,6 @@ const useCurrentWeather = () => {
         setError(coords.error);
       } else {
         try {
-          // const response = await fetch(
-          //   `https://api.open-meteo.com/v1/forecast?latitude=${coords.latitude}&longitude=${coords.longitude}&current_weather=true`
-          // );
-
           const response = await fetch(
             `https://api.open-meteo.com/v1/forecast?latitude=${coords.latitude}&longitude=${coords.longitude}&daily=weathercode,temperature_2m_max,temperature_2m_min&current_weather=true&timezone=Europe%2FLondon&forecast_days=5`
           );
