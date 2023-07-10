@@ -1,9 +1,9 @@
 import React from "react";
 import { View, Text, Image } from 'react-native';
 
-import { getDayName } from "../utils";
+import { getDayName, weatherIcon } from "../utils";
 
-const ForecastCard = ({ date, max, min }) => {
+const ForecastCard = ({ date, max, min, code }) => {
   return (
     <View className="p-5 bg-slate-800 mx-5 my-2 rounded-3xl flex-row justify-between items-center">
       <View>
@@ -20,7 +20,7 @@ const ForecastCard = ({ date, max, min }) => {
         </Text>
       </View>
       <Image
-        source={require("../../assets/weather_icons/drizzle.png")}
+        source={weatherIcon(code)}
         className="h-24 w-24"
       />
     </View>

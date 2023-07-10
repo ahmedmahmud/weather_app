@@ -9,7 +9,6 @@ const useCurrentWeather = () => {
   useEffect(() => {
     (async () => {
       const coords = await getCurrentCoords();
-      console.log("coords", coords);
         
       if ('error' in coords) {
         setError(coords.error);
@@ -24,7 +23,6 @@ const useCurrentWeather = () => {
           }
 
           const data = await response.json();
-          console.log("fetched", data);
           
           setError(null);
           setData(data);

@@ -3,13 +3,13 @@ import { View, ScrollView } from "react-native";
 
 import CityDropdown from "../components/CityDropdown";
 import { usePlaces } from "../contexts/PlacesContext";
-import useWeather from "../hooks/useWeather";
+import useWeatherList from "../hooks/useWeatherList";
 import PlaceInfo from "../components/PlaceInfo";
 import CurrentWeather from "../components/CurrentWeather";
 
 function Home({ navigation }) {
   const places = usePlaces();
-  const [savedData, refresh] = useWeather(places);
+  const [savedData, refresh] = useWeatherList(places);
 
   return (
     <ScrollView
@@ -17,12 +17,16 @@ function Home({ navigation }) {
       keyboardShouldPersistTaps="handled"
       className="flex-1 bg-slate-900"
     >
-      <View className="px-3 mt-2">
+      <View className="px-3 mt-3">
         <CityDropdown navigation={navigation} />
         <CurrentWeather navigation={navigation} />
-        {places.map((place) => (
-          <PlaceInfo place={place} />
-        ))}
+        <View className="mt-5">
+          {places.map((place) => (
+            <View className="mb-5" key={place.id}>
+              <PlaceInfo place={place} weather={savedData[place.id]} navigation={navigation} />
+            </View>
+          ))}
+        </View>
       </View>
     </ScrollView>
   );

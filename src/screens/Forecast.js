@@ -7,14 +7,14 @@ import ForecastCard from "../components/ForecastCard";
 
 function Forecast({ route, navigation }) {
   const { daily } = route.params;
-  const data = useMemo(() => _.zip(daily.time, daily.temperature_2m_max, daily.temperature_2m_min), [daily])
+  const data = useMemo(() => _.zip(daily.time, daily.temperature_2m_max, daily.temperature_2m_min, daily.weathercode), [daily])
 
   return (
     <View className="flex-1 bg-slate-900">
       <Header navigation={navigation} title="Forecast" />
       <FlatList
         data={data}
-        renderItem={({item}) => <ForecastCard date={item[0]} max={item[1]} min={item[2]} />}
+        renderItem={({item}) => <ForecastCard date={item[0]} max={item[1]} min={item[2]} code={item[3]} />}
       />
     </View>
   );
