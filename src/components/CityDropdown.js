@@ -1,16 +1,9 @@
 import React, { memo, useCallback, useRef, useState } from "react";
 import {
-  Button,
   Dimensions,
   Text,
-  View,
-  Platform,
-  ScrollView,
 } from "react-native";
 import { AutocompleteDropdown } from "react-native-autocomplete-dropdown";
-
-// import Feather from '@expo/vector-icons/Feather'
-// Feather.loadFont()
 
 const CityDropdown = memo(({ navigation }) => {
   const [loading, setLoading] = useState(false);
@@ -67,16 +60,22 @@ const CityDropdown = memo(({ navigation }) => {
           placeholder: "Search city...",
           autoCorrect: false,
           autoCapitalize: "none",
-          // style: {
-          //   borderRadius: 25,
-          //   backgroundColor: "#383b42",
-          //   color: "#fff",
-          //   paddingLeft: 18,
-          // },
+          style: {
+            color: "#fff",
+            paddingLeft: 18,
+          },
+        }}
+        inputContainerStyle={{
+          backgroundColor: '#1E293B',
+          borderRadius: 25,
+        }}
+        suggestionsListContainerStyle={{
+          backgroundColor: '#1E293B',
+          borderRadius: 25
         }}
 
         renderItem={(item, text) => (
-          <Text style={{ padding: 15 }}>{item.name}</Text>
+          <Text className="text-white" style={{ padding: 15 }}>{item.name}</Text>
         )}
 
         inputHeight={50}

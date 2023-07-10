@@ -1,35 +1,36 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
+import Feather from "@expo/vector-icons/Feather";
 
-import { usePlaces, usePlacesDispatch } from "../contexts/PlacesContext";
-import Header from "../components/Header";
+import useCurrentWeather from "../hooks/useCurrentWeather";
 
-const Result = ({ route, navigation }) => {
-  const { place } = route.params;
+const CurrentWeather = ({ navigation }) => {
+  const [data, loading, error] = useCurrentWeather();
 
-  const places = usePlaces();
-  const saved = useMemo(
-    () => places.some(({ id }) => id == place.id),
-    [places]
+  if (loading) return (
+    <Text>Loaidng...</Text>
   );
 
-  const dispatch = usePlacesDispatch();
-  const addPlace = (place) => {
-    dispatch({
-      type: "add",
-      place,
-    });
-  };
+  if (error) return (
+    <Text>Error: { error }</Text>
+  );
 
   return (
-    <View className="bg-slate-900 flex-1">
-      <Header navigation={navigation} title={place.name} />
-      <View className="rounded-[40px] bg-slate-800 mx-5 mt-2 p-6 space-y-5">
+    <View className="rounded-[40px] bg-slate-800">
+      <View className="p-6 space-y-5">
+        <View className="flex-row justify-between px-2">
+          <Text className="text-white/80 text-lg tracking-tight font-inter-700">
+            Monday
+          </Text>
+          <Text className="text-white/80 text-lg tracking-tight font-inter-700">
+            12:34 pm
+          </Text>
+        </View>
         <View className="items-center space-y-5">
           <Image source={require("../../assets/weather_icons/drizzle.png")} />
           <View className="flex-row">
             <Text className="text-white font-inter-500 text-6xl tracking-tighter">
-              10
+              {data.current_weather.temperature}
             </Text>
             <Text className="text-white font-inter-600 text-2xl tracking-tighter">
               °C
@@ -63,18 +64,20 @@ const Result = ({ route, navigation }) => {
           </View>
         </View>
       </View>
-
       <TouchableOpacity
-        className="bg-slate-800 items-center p-2 mx-5 mt-5 rounded-[40px]"
-        onPress={() => addPlace(place)}
-        disabled={saved}
+        className="bg-slate-700 rounded-b-[40px]"
+        onPress={() =>
+          navigation.navigate("Forecast", {
+            daily: data.daily,
+          })
+        }
       >
-        <Text className={`${saved ? 'text-white/40' : 'text-white/100'} font-inter-600 text-lg`}>
-          {saved ? "SAVED" : "SAVE"}
+        <Text className="text-center font-inter-900 text-white/80 py-2">
+          VIEW FORECAST
         </Text>
       </TouchableOpacity>
     </View>
   );
 };
 
-export default Result;
+export default CurrentWeather;

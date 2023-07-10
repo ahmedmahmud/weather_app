@@ -1,20 +1,21 @@
-import React from "react";
-import { View, Text } from "react-native";
-import { getDayName } from "../utils";
+import React, { useMemo } from "react";
+import { View, FlatList } from "react-native";
+import _ from "lodash";
+
+import Header from "../components/Header";
+import ForecastCard from "../components/ForecastCard";
 
 function Forecast({ route, navigation }) {
   const { daily } = route.params;
+  const data = useMemo(() => _.zip(daily.time, daily.temperature_2m_max, daily.temperature_2m_min), [daily])
 
   return (
-    <View className="flex-1 justify-center items-center bg-white">
-      <Text>Forecast Screen</Text>
-      {daily.time.map((date, i) => (
-        <View>
-          <Text>Day: { getDayName(date) }</Text>
-          <Text>Max: { daily.temperature_2m_max[i] }</Text>
-          <Text>Min: { daily.temperature_2m_min[i] }</Text>
-        </View>
-      ))}
+    <View className="flex-1 bg-slate-900">
+      <Header navigation={navigation} title="Forecast" />
+      <FlatList
+        data={data}
+        renderItem={({item}) => <ForecastCard date={item[0]} max={item[1]} min={item[2]} />}
+      />
     </View>
   );
 }
