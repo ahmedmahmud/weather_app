@@ -1,6 +1,7 @@
 import React, { memo, useCallback, useRef, useState } from "react";
 import { Dimensions, Text, Image, View } from "react-native";
 import { AutocompleteDropdown } from "react-native-autocomplete-dropdown";
+import { SvgUri } from "react-native-svg";
 
 const CityDropdown = memo(({ navigation }) => {
   const [loading, setLoading] = useState(false);
@@ -70,21 +71,21 @@ const CityDropdown = memo(({ navigation }) => {
         borderRadius: 25,
       }}
       ItemSeparatorComponent={<View className="h-0" />}
-
       renderItem={({ name, admin1, country_code }) => (
         <View className="flex-row items-center pl-2 py-2 rounded-full">
-          <Image
-            className="w-10 aspect-square rounded-full"
-            source={{
-              uri: `https://flagcdn.com/w160/${(country_code || '').toLowerCase()}.png`,
-            }}
+          <SvgUri
+            width="40"
+            height="40"
+            uri={`https://hatscripts.github.io/circle-flags/flags/${(
+              country_code || ""
+            ).toLowerCase()}.svg`}
           />
+
           <Text className="text-white" style={{ padding: 15 }}>
-            {name}, {admin1}
+            {name}{admin1 ? `, ${admin1}` : ""}
           </Text>
         </View>
       )}
-
       inputHeight={50}
       showChevron={false}
       closeOnBlur={false}

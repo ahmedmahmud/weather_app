@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { getCurrentCoords } from '../adapters/location';
+import { useState, useEffect } from "react";
+import { getCurrentCoords } from "../adapters/location";
 
 const useCurrentWeather = () => {
   const [data, setData] = useState(null);
@@ -9,9 +9,10 @@ const useCurrentWeather = () => {
   useEffect(() => {
     (async () => {
       const coords = await getCurrentCoords();
-        
-      if ('error' in coords) {
-        setError(coords.error);
+      console.log("coords", coords);
+
+      if ("error" in coords) {
+        setError("location");
       } else {
         try {
           const response = await fetch(
@@ -19,15 +20,15 @@ const useCurrentWeather = () => {
           );
 
           if (!response.ok) {
-            throw new Error;
+            throw new Error();
           }
 
           const data = await response.json();
-          
+
           setError(null);
           setData(data);
         } catch {
-          setError("Failed to fetch weather");
+          setError("weather");
         }
       }
 
@@ -36,6 +37,6 @@ const useCurrentWeather = () => {
   }, []);
 
   return [data, loading, error];
-}
+};
 
 export default useCurrentWeather;

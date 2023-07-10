@@ -28,7 +28,9 @@ const PlaceInfo = ({ place: { name, admin1, id }, weather, navigation }) => {
         </Text>
         {weather ? (
           weather.error ? (
-            <Text className="text-white/80 mt-4 font-inter-800 text-base">Failed to get weather</Text>
+            <Text className="text-white/80 mt-4 font-inter-800 text-base">
+              Failed to get weather
+            </Text>
           ) : (
             <View className="flex-row items-center space-x-5">
               <View className="flex-row">
@@ -59,7 +61,7 @@ const PlaceInfo = ({ place: { name, admin1, id }, weather, navigation }) => {
           className="w-14 h-14 bg-slate-700 rounded-full items-center justify-center"
           disabled={!weather || weather.error}
         >
-          <Feather name="calendar" size={24} color="white" />
+          <Feather name="calendar" size={24} color={!weather || weather.error ? '#ffffff44' : 'white'} />
         </TouchableOpacity>
         <TouchableOpacity
           className="w-14 h-14 bg-slate-700 rounded-full items-center justify-center"

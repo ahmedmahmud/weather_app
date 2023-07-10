@@ -1,6 +1,12 @@
 import React from "react";
-import { View, Text, TouchableOpacity, Image, ActivityIndicator } from "react-native";
-import Feather from '@expo/vector-icons/Feather';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  ActivityIndicator,
+} from "react-native";
+import Feather from "@expo/vector-icons/Feather";
 
 import useCurrentWeather from "../hooks/useCurrentWeather";
 import { todayName, weatherIcon } from "../utils";
@@ -8,17 +14,30 @@ import { todayName, weatherIcon } from "../utils";
 const CurrentWeather = ({ navigation }) => {
   const [data, loading, error] = useCurrentWeather();
 
-  if (loading) return (
-    <View className="rounded-[40px] bg-slate-800 items-center mt-5 p-5">
-      <ActivityIndicator color='white' size={40} />
-    </View>
-  );
+  if (loading)
+    return (
+      <View className="rounded-[40px] bg-slate-800 items-center mt-5 p-5">
+        <ActivityIndicator color="white" size={40} />
+      </View>
+    );
 
-  if (error) return (
-    <View className="rounded-[40px] bg-slate-800 items-center mt-5 p-5">
-      <Text className="text-white font-inter-800 text-base">Failed to get current weather</Text>
-    </View>
-  );
+  if (error === "location")
+    return (
+      <View className="rounded-[40px] bg-slate-800 items-center mt-5 p-5">
+        <Text className="text-white font-inter-800 text-base">
+          Failed to get current location
+        </Text>
+      </View>
+    );
+
+  if (error === "weather")
+    return (
+      <View className="rounded-[40px] bg-slate-800 items-center mt-5 p-5">
+        <Text className="text-white font-inter-800 text-base">
+          Failed to get current weather
+        </Text>
+      </View>
+    );
 
   return (
     <View className="rounded-[40px] bg-slate-800 mt-5">
@@ -45,9 +64,9 @@ const CurrentWeather = ({ navigation }) => {
             </Text>
           </View>
           <View className="flex-1 flex-row justify-center items-center space-x-2">
-          <Feather name="compass" color="#ffffffbb" size={24} />
+            <Feather name="compass" color="#ffffffbb" size={24} />
             <Text className="text-white font-inter-600 tracking-tight text-base">
-            {data.current_weather.winddirection}°
+              {data.current_weather.winddirection}°
             </Text>
           </View>
         </View>

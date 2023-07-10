@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image } from "react-native";
 
 import { getDayName, weatherIcon } from "../utils";
 
@@ -19,10 +19,7 @@ const ForecastCard = ({ date, max, min, code }) => {
           <Text className="text-white"> {min}°C</Text>
         </Text>
       </View>
-      <Image
-        source={weatherIcon(code)}
-        className="h-24 w-24"
-      />
+      <Image source={weatherIcon(code)} className="h-24 w-24" />
     </View>
   );
 };
