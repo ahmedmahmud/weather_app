@@ -21,7 +21,7 @@ const Result = ({ route, navigation }) => {
     [places]
   );
 
-  const [weather, loading, error] = useWeather(place);
+  const [data, loading, error] = useWeather(place);
 
   const dispatch = usePlacesDispatch();
   const addPlace = (place) => {
@@ -38,14 +38,18 @@ const Result = ({ route, navigation }) => {
         <View className="items-center space-y-5">
           {loading ? (
             <ActivityIndicator color="white" size={34} />
+          ) : error || !data ? (
+            <Text className="text-white/80 font-inter-800 text-base">
+              Failed to get weather
+            </Text>
           ) : (
             <>
               <Image
-                source={weatherIcon(weather.current_weather?.weathercode)}
+                source={weatherIcon(data.current_weather?.weathercode)}
               />
               <View className="flex-row">
                 <Text className="text-white font-inter-500 text-6xl tracking-tighter">
-                  {weather?.current_weather?.temperature}
+                  {data.current_weather?.temperature}
                 </Text>
                 <Text className="text-white font-inter-600 text-2xl tracking-tighter">
                   °C

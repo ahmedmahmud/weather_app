@@ -76,7 +76,7 @@ const CityDropdown = memo(({ navigation }) => {
           <Image
             className="w-10 aspect-square rounded-full"
             source={{
-              uri: `https://flagcdn.com/w160/${country_code.toLowerCase()}.png`,
+              uri: `https://flagcdn.com/w160/${(country_code || '').toLowerCase()}.png`,
             }}
           />
           <Text className="text-white" style={{ padding: 15 }}>

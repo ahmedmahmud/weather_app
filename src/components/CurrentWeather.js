@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image, ActivityIndicator } from "react-native";
 import Feather from '@expo/vector-icons/Feather';
 
 import useCurrentWeather from "../hooks/useCurrentWeather";
@@ -9,11 +9,15 @@ const CurrentWeather = ({ navigation }) => {
   const [data, loading, error] = useCurrentWeather();
 
   if (loading) return (
-    <Text>Loaidng...</Text>
+    <View className="rounded-[40px] bg-slate-800 items-center mt-5 p-5">
+      <ActivityIndicator color='white' size={40} />
+    </View>
   );
 
   if (error) return (
-    <Text>Error: { error }</Text>
+    <View className="rounded-[40px] bg-slate-800 items-center mt-5 p-5">
+      <Text className="text-white font-inter-800 text-base">Failed to get current weather</Text>
+    </View>
   );
 
   return (

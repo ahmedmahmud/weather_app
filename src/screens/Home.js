@@ -1,5 +1,5 @@
 import React from "react";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, RefreshControl } from "react-native";
 
 import CityDropdown from "../components/CityDropdown";
 import { usePlaces } from "../contexts/PlacesContext";
@@ -11,11 +11,21 @@ function Home({ navigation }) {
   const places = usePlaces();
   const [savedData, refresh] = useWeatherList(places);
 
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(async () => {
+    setRefreshing(true);
+    await refresh();
+    setRefreshing(false);
+  }, []);
+
   return (
     <ScrollView
-      // keyboardDismissMode="on-drag"
       keyboardShouldPersistTaps="handled"
       className="flex-1 bg-slate-900"
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
     >
       <View className="px-3 mt-3">
         <CityDropdown navigation={navigation} />

@@ -1,5 +1,11 @@
 import React from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  ActivityIndicator,
+} from "react-native";
 import Feather from "@expo/vector-icons/Feather";
 
 import { usePlacesDispatch } from "../contexts/PlacesContext";
@@ -21,22 +27,26 @@ const PlaceInfo = ({ place: { name, admin1, id }, weather, navigation }) => {
           {name}, {admin1}
         </Text>
         {weather ? (
-          <View className="flex-row items-center space-x-5">
-            <View className="flex-row">
-              <Text className="text-white font-inter-500 text-4xl tracking-tighter">
-                {weather.current_weather?.temperature}
-              </Text>
-              <Text className="text-white font-inter-600 text-xl tracking-tighter">
-                °C
-              </Text>
+          weather.error ? (
+            <Text className="text-white/80 mt-4 font-inter-800 text-base">Failed to get weather</Text>
+          ) : (
+            <View className="flex-row items-center space-x-5">
+              <View className="flex-row">
+                <Text className="text-white font-inter-500 text-4xl tracking-tighter">
+                  {weather.current_weather?.temperature}
+                </Text>
+                <Text className="text-white font-inter-600 text-xl tracking-tighter">
+                  °C
+                </Text>
+              </View>
+              <Image
+                source={weatherIcon(weather?.current_weather?.weathercode)}
+                className="w-14 h-14"
+              />
             </View>
-            <Image
-              source={weatherIcon(weather?.current_weather?.weathercode)}
-              className="w-14 h-14"
-            />
-          </View>
+          )
         ) : (
-          <Text>Loading</Text>
+          <ActivityIndicator color="white" size="large" className="mt-4" />
         )}
       </View>
       <View className="space-y-2 justify-center">
@@ -47,7 +57,7 @@ const PlaceInfo = ({ place: { name, admin1, id }, weather, navigation }) => {
             })
           }
           className="w-14 h-14 bg-slate-700 rounded-full items-center justify-center"
-          disabled={!weather}
+          disabled={!weather || weather.error}
         >
           <Feather name="calendar" size={24} color="white" />
         </TouchableOpacity>
