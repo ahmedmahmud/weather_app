@@ -60,6 +60,7 @@ const CityDropdown = memo(({ navigation }) => {
         style: {
           color: "#fff",
           paddingLeft: 18,
+          fontFamily: 'Inter_600SemiBold'
         },
       }}
       inputContainerStyle={{
@@ -81,7 +82,7 @@ const CityDropdown = memo(({ navigation }) => {
             ).toLowerCase()}.svg`}
           />
 
-          <Text className="text-white" style={{ padding: 15 }}>
+          <Text className="text-white font-inter-600" style={{ padding: 15 }}>
             {name}{admin1 ? `, ${admin1}` : ""}
           </Text>
         </View>
