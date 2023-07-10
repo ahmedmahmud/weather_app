@@ -13,7 +13,7 @@ Weather
 > :zap: ~ This project is for Aviva
 
 ## <samp> Installation </samp>
-- Releases tab _(Android only)_ 
+- [Releases](https://github.com/ahmedmahmud/weather_app/releases) tab _(Android only)_ 
 - Build manually
 
 ## <samp> Building </samp>
