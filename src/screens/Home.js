@@ -13,11 +13,11 @@ function Home({ navigation }) {
 
   const [refreshing, setRefreshing] = React.useState(false);
 
-  const onRefresh = React.useCallback(async () => {
+  const onRefresh = async () => {
     setRefreshing(true);
     await refresh();
     setRefreshing(false);
-  }, []);
+  }
 
   return (
     <ScrollView

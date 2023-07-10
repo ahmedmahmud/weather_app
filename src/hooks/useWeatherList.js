@@ -29,8 +29,8 @@ const useWeatherList = (places) => {
     setFetched(data);
   };
 
-  const refresh = () => {
-    fetchNew({});
+  const refresh = async () => {
+    await fetchNew({});
   };
 
   useEffect(() => {
